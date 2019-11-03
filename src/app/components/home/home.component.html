@@ -1,0 +1,13 @@
+<div class="container mt-3">
+    <h1>{{pageTitle}}</h1>
+    <hr>
+    <div class="jumbotron" *ngIf="identity">
+        <h1 class="display-4">Bienvenido al gestor de almacen.</h1>
+    </div>
+    <div class="jumbotron" *ngIf="!identity">
+        <h1 class="display-4">Bienvenido al gestor de almacen.</h1>
+        <p class="lead">Debe de estar identificado para continuar.</p>
+        <hr class="my-4">
+        <a class="btn btn-primary btn-lg" [routerLink]="['/login']" role="button">Identificarse</a>
+    </div>
+</div>

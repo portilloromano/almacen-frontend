@@ -1,0 +1,47 @@
+<div class="container mt-3">
+  <h1>{{pageTitle}}</h1>
+  <hr>
+  <div class="alert alert-danger col-md-5 mt-3" *ngIf="status == 'error' && message != undefined">
+    {{message}}
+  </div>
+  <div class="mb-2">
+    <label for="filter">Filtro</label>
+    <input class="ml-1" type="text" name="filter" [(ngModel)]="filter" (keyup)="onKeyup()" />
+  </div>
+  <table class="table table-striped">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Descripción</th>
+        <th scope="col">Cantidad</th>
+        <th scope="col">Categoría</th>
+        <th scope="col">Proveedor</th>
+        <th scope="col"><a class="btn btn-success" [routerLink]="['/product/create/']">Crear</a></th>
+      </tr>
+    </thead>
+    <tbody *ngFor="let product of products">
+      <tr>
+        <th scope="row">{{product.id}}</th>
+        <td>{{product.name}}</td>
+        <td>{{product.description}}</td>
+        <td>{{product.quantity}}</td>
+        <td>{{product.category.name}}</td>
+        <td>{{product.provider.name}}</td>
+        <td>
+          <a class="btn btn-primary mr-2" [routerLink]="['/product/edit/'+product.id]" data-toggle="tooltip"
+            data-placement="top" title="Editar">
+            <img src="/assets/images/edit-icon.png" width="24" height="24" alt="Editar">
+          </a>
+          <a class="btn btn-warning" [routerLink]="['/product/show/'+product.id]" data-toggle="tooltip"
+            data-placement="top" title="Mostrar">
+            <img src="/assets/images/show-icon.png" width="24" height="24" alt="Mostrar">
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <pagination *ngIf="totalPages > 1" class="justify-content-center" [totalItems]="totalItems" [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" [(ngModel)]="currentPage"
+    (pageChanged)="pageChanged($event)" nextText="Siguiente" previousText="Anterior">
+  </pagination>
+</div>

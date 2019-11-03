@@ -1,0 +1,42 @@
+<div class="container mt-3">
+  <h1>{{pageTitle}}</h1>
+  <hr>
+  <div class="alert alert-danger col-md-5 mt-3" *ngIf="status == 'error' && message != undefined">
+    {{message}}
+  </div>
+  <div class="mb-2">
+    <label for="filter">Filtro</label>
+    <input class="ml-1" type="text" name="filter" [(ngModel)]="filter" (keyup)="onKeyup()" />
+  </div>
+  <table class="table table-striped">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Email</th>
+        <th scope="col">Teléfono</th>
+        <th scope="col">Dirección</th>
+        <th scope="col"><a class="btn btn-success" [routerLink]="['/provider/create/']">Crear</a></th>
+      </tr>
+    </thead>
+    <tbody *ngFor="let provider of filteredProviders">
+      <tr>
+        <th scope="row">{{provider.id}}</th>
+        <td>{{provider.name}}</td>
+        <td>{{provider.email}}</td>
+        <td>{{provider.phone}}</td>
+        <td>{{provider.address}}</td>
+        <td>
+          <a class="btn btn-primary mr-2" [routerLink]="['/provider/edit/'+provider.id]" data-toggle="tooltip"
+            data-placement="top" title="Editar">
+            <img src="/assets/images/edit-icon.png" width="24" height="24" alt="Editar">
+          </a>
+          <a class="btn btn-warning" [routerLink]="['/provider/show/'+provider.id]" data-toggle="tooltip"
+            data-placement="top" title="Mostrar">
+            <img src="/assets/images/show-icon.png" width="24" height="24" alt="Mostrar">
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

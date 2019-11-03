@@ -1,0 +1,39 @@
+<div class="container mt-3" *ngIf="user">
+    <h1>{{pageTitle}}</h1>
+    <hr>
+    <div class="alert alert-danger col-md-5 mt-3" *ngIf="status=='error'">
+        {{message}}
+    </div>
+    <div class="col-md-5 ml-0 pl-0">
+        <div class="form-group">
+            <label for="name">Nombre</label>
+            <label class="form-control" name="name">{{user.name}}</label>
+        </div>
+        <div class="form-group">
+            <label for="surname">Apellidos</label>
+            <label class="form-control" name="surname">{{user.surname}}</label>
+        </div>
+        <div class="form-group">
+            <label for="email">Correo electrónico</label>
+            <label class="form-control" name="email">{{user.email}}</label>
+        </div>
+        <div class="form-group">
+            <label for="roles">Roles</label>
+            <label class="form-control" name="roles">{{user.roles}}</label>
+        </div>
+        <div class="form-group">
+            <label for="active">Activo</label>
+            <input type="checkbox" class="form-control" name="active" #active="ngModel" [(ngModel)]="user.active"
+                disabled />
+        </div>
+        <div class="form-group">
+            <label for="createdAt">Fecha de creación</label>
+            <label class="form-control" name="createdAt">{{user.createdAt | date: 'dd/MM/yyyy, HH:mm'}}</label>
+        </div>
+        <div class="form-group">
+            <label for="updatedAt">Fecha de la última modificación</label>
+            <label class="form-control" name="updatedAt">{{user.updatedAt | date: 'dd/MM/yyyy, HH:mm'}}</label>
+        </div>
+        <a class="btn btn-success text-light mb-3" [routerLink]="['/user/']">Regresar</a>
+    </div>
+</div>

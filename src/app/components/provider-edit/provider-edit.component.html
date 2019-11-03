@@ -1,0 +1,45 @@
+<div class="container mt-3" *ngIf="provider">
+    <h1>{{pageTitle}}</h1>
+    <hr>
+    <div class="alert alert-success col-md-5 mt-3" *ngIf="status=='success'">
+        {{message}}
+        <a [routerLink]="['/provider/']">Regresar</a>
+    </div>
+    <div class="alert alert-danger col-md-5 mt-3" *ngIf="status=='error'">
+        {{message}}
+    </div>
+    <form class="col-md-5 ml-0 pl-0" #providerEditForm="ngForm" (ngSubmit)="onSubmit(providerEditForm)">
+        <div class="form-group">
+            <label for="name">Nombre</label>
+            <input type="text" class="form-control" name="name" #name="ngModel" [(ngModel)]="provider.name" required />
+            <small *ngIf="!name.valid && name.touched" class="invalid-feedback d-block">
+                El nombre no puede estar vacío.
+            </small>
+        </div>
+        <div class="form-group">
+            <label for="email">Correo electrónico</label>
+            <input type="email" class="form-control" name="email" #email="ngModel" [(ngModel)]="provider.email" required
+                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" />
+            <small *ngIf="!email.valid && email.touched" class="invalid-feedback d-block">
+                El correo electrónico no es válido.
+            </small>
+        </div>
+        <div class="form-group">
+            <label for="phone">Teléfono</label>
+            <input type="text" class="form-control" name="phone" #phone="ngModel" [(ngModel)]="provider.phone"
+                required />
+            <small *ngIf="!phone.valid && phone.touched" class="invalid-feedback d-block">
+                El teléfono no puede estar vacío.
+            </small>
+        </div>
+        <div class="form-group">
+            <label for="address">Dirección</label>
+            <input type="text" class="form-control" name="address" #address="ngModel" [(ngModel)]="provider.address"
+                required />
+            <small *ngIf="!address.valid && address.touched" class="invalid-feedback d-block">
+                La dirección no puede estar vacía.
+            </small>
+        </div>
+        <input type="submit" value="Registrar" class="btn btn-success mb-3" [disabled]="providerEditForm.invalid" />
+    </form>
+</div>

@@ -1,0 +1,143 @@
+<div class="container mt-3">
+  <h1>{{pageTitle}}</h1>
+  <hr>
+  <div class="alert alert-success col-md-5 mt-3" *ngIf="status=='success'">
+    {{message}}
+    <a [routerLink]="['/product/']">Regresar</a>
+  </div>
+  <div class="alert alert-danger col-md-5 mt-3" *ngIf="status=='error'">
+    {{message}}
+  </div>
+  <form class="col-md-5 ml-0 pl-0" #productCreateForm="ngForm" (ngSubmit)="onSubmit(productCreateForm)">
+    <div class="form-group">
+      <label for="name">Nombre</label>
+      <input type="text" class="form-control" name="name" #name="ngModel" [(ngModel)]="product.name" required />
+      <small *ngIf="!name.valid && name.touched" class="invalid-feedback d-block">
+        El nombre no puede estar vacío.
+      </small>
+    </div>
+    <div class="form-group">
+      <label for="description">Descripción</label>
+      <input type="text" class="form-control" name="description" #description="ngModel"
+        [(ngModel)]="product.description" required />
+      <small *ngIf="!description.valid && description.touched" class="invalid-feedback d-block">
+        La descripción no puede estar vacía.
+      </small>
+    </div>
+    <div class="form-group">
+      <label for="category">Categoría</label>
+      <div class="input-group mb-3">
+        <input type="text" class="form-control" name="category" #category="ngModel" [(ngModel)]="categoryName" required
+          disabled />
+        <div class="input-group-prepend">
+          <a class="btn btn-primary" data-toggle="modal" href="#CategoryModal">
+            <img src="/assets/images/search-icon.png" width="24" height="24" alt="Buscar">
+          </a>
+        </div>
+      </div>
+      <small *ngIf="!category.valid && category.touched" class="invalid-feedback d-block">
+        La categoría no puede estar vacía.
+      </small>
+      <!-- Modal Category -->
+      <div class="modal fade" id="CategoryModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog modal-md modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle">Categorías</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="mb-2">
+                <label for="filter">Filtro</label>
+                <input class="ml-1" type="text" name="filter" [(ngModel)]="filter" (keyup)="onKeyupCategory()" />
+              </div>
+              <table class="table table-striped h-75">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Descripción</th>
+                    <th scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody *ngFor="let category of filteredCategories">
+                  <tr class="clickable-row">
+                    <th scope="row">{{category.id}}</th>
+                    <td>{{category.name}}</td>
+                    <td>{{category.description}}</td>
+                    <td>
+                      <button class="btn btn-outline-secondary" type="button" data-dismiss="modal"
+                        (click)="assignCategory(category.id, category.name)">
+                        <img src="/assets/images/verif-icon.png" width="24" height="24" alt="Buscar">
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="provider">Proveedor</label>
+      <div class="input-group mb-3">
+        <input type="text" class="form-control" name="provider" #provider="ngModel" [(ngModel)]="providerName" required
+          disabled />
+        <div class="input-group-prepend">
+          <a class="btn btn-primary" data-toggle="modal" href="#ProviderModal">
+            <img src="/assets/images/search-icon.png" width="24" height="24" alt="Buscar">
+          </a>
+        </div>
+      </div>
+      <small *ngIf="!provider.valid && provider.touched" class="invalid-feedback d-block">
+        El proveedor no puede estar vacío.
+      </small>
+      <!-- Modal Provider -->
+      <div class="modal fade" id="ProviderModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog modal-md modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle">Categorías</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="mb-2">
+                <label for="filter">Filtro</label>
+                <input class="ml-1" type="text" name="filter" [(ngModel)]="filter" (keyup)="onKeyupProvider()" />
+              </div>
+              <table class="table table-striped h-75">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody *ngFor="let provider of filteredProviders">
+                  <tr class="clickable-row">
+                    <th scope="row">{{provider.id}}</th>
+                    <td>{{provider.name}}</td>
+                    <td>
+                      <button class="btn btn-outline-secondary" type="button" data-dismiss="modal"
+                        (click)="assignProvider(provider.id, provider.name)">
+                        <img src="/assets/images/verif-icon.png" width="24" height="24" alt="Buscar">
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <input type="submit" value="Registrar" class="btn btn-success mb-3" [disabled]="productCreateForm.invalid || !categoryName || !providerName" />
+  </form>
+</div>

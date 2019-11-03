@@ -1,0 +1,101 @@
+<div class="container mt-3">
+  <h1>{{pageTitle}}</h1>
+  <hr>
+  <div class="alert alert-success col-md-5 mt-3" *ngIf="status=='success'">
+    {{message}}
+    <a [routerLink]="['/movement/']">Regresar</a>
+  </div>
+  <div class="alert alert-danger col-md-5 mt-3" *ngIf="status=='error'">
+    {{message}}
+  </div>
+  <form class="col-md-5 ml-0 pl-0" #movementCreateForm="ngForm" (ngSubmit)="onSubmit(movementCreateForm)">
+    <div class="form-group">
+      <label for="type">Tipo</label>
+      <select name="type" class="form-control" name="type" #type="ngModel" [(ngModel)]="movement.type" required>
+        <option value="Entrada">Entrada</option>
+        <option value="Salida">Salida</option>
+      </select>
+      <small *ngIf="!type.valid && type.touched" class="invalid-feedback d-block">
+        El tipo no puede estar vacío.
+      </small>
+    </div>
+    <div class="form-group">
+      <label for="description">Descripción</label>
+      <input type="text" class="form-control" name="description" #description="ngModel"
+        [(ngModel)]="movement.description" required />
+      <small *ngIf="!description.valid && description.touched" class="invalid-feedback d-block">
+        La descripción no puede estar vacía.
+      </small>
+    </div>
+    <div class="form-group">
+      <label for="quantity">Cantidad</label>
+      <input type="number" class="form-control" name="quantity" #quantity="ngModel" [(ngModel)]="movement.quantity"
+        required />
+      <small *ngIf="!quantity.valid && quantity.touched" class="invalid-feedback d-block">
+        La descripción no puede estar vacía.
+      </small>
+    </div>
+    <div class="form-group">
+      <label for="product">Producto</label>
+      <div class="input-group mb-3">
+        <input type="text" class="form-control" name="product" #product="ngModel" [(ngModel)]="productName" required
+          disabled />
+        <div class="input-group-prepend">
+          <a class="btn btn-primary" data-toggle="modal" href="#ProductModal">
+            <img src="/assets/images/search-icon.png" width="24" height="24" alt="Buscar">
+          </a>
+        </div>
+      </div>
+      <small *ngIf="!product.valid && product.touched" class="invalid-feedback d-block">
+        La categoría no puede estar vacía.
+      </small>
+      <!-- Modal Product -->
+      <div class="modal fade" id="ProductModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog modal-md modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle">Producto</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="mb-2">
+                <label for="filter">Filtro</label>
+                <input class="ml-1" type="text" name="filter" [(ngModel)]="filter" (keyup)="onKeyupProduct()" />
+              </div>
+              <table class="table table-striped h-75">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Descripción</th>
+                    <th scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody *ngFor="let product of products">
+                  <tr class="clickable-row">
+                    <th scope="row">{{product.id}}</th>
+                    <td>{{product.name}}</td>
+                    <td>{{product.description}}</td>
+                    <td>
+                      <button class="btn btn-outline-secondary" type="button" data-dismiss="modal"
+                        (click)="assignProduct(product.id, product.name)">
+                        <img src="/assets/images/verif-icon.png" width="24" height="24" alt="Buscar">
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <pagination name="pagination" class="justify-content-center" [totalItems]="totalItems" [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" [(ngModel)]="currentPage"
+              (pageChanged)="pageChanged($event)" nextText="Siguiente" previousText="Anterior">
+            </pagination>
+          </div>
+        </div>
+      </div>
+    </div>
+    <input type="submit" value="Registrar" class="btn btn-success mb-3" [disabled]="movementCreateForm.invalid || !productName" />
+  </form>
+</div>

@@ -1,0 +1,36 @@
+<div class="container mt-3">
+  <h1>{{pageTitle}}</h1>
+  <hr>
+  <div class="alert alert-danger col-md-5 mt-3" *ngIf="status == 'error' && message != undefined">
+    {{message}}
+  </div>
+  <div class="mb-2">
+    <label for="filter">Filtro</label>
+    <input class="ml-1" type="text"  name="filter" [(ngModel)]="filter" (keyup)="onKeyup()" />
+  </div>
+  <table class="table table-striped">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Descripción</th>
+        <th scope="col"><a class="btn btn-success" [routerLink]="['/category/create/']">Crear</a></th>
+      </tr>
+    </thead>
+    <tbody *ngFor="let category of filteredCategories">
+      <tr>
+        <th scope="row">{{category.id}}</th>
+        <td>{{category.name}}</td>
+        <td>{{category.description}}</td>
+        <td>
+          <a class="btn btn-primary mr-2" [routerLink]="['/category/edit/'+category.id]" data-toggle="tooltip" data-placement="top" title="Editar">
+            <img src="/assets/images/edit-icon.png" width="24" height="24" alt="Editar">
+          </a>
+          <a class="btn btn-warning" [routerLink]="['/category/show/'+category.id]" data-toggle="tooltip" data-placement="top" title="Mostrar">
+            <img src="/assets/images/show-icon.png" width="24" height="24" alt="Mostrar">
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

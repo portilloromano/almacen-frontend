@@ -1,0 +1,43 @@
+<div class="container mt-3">
+        <h1>{{pageTitle}}</h1>
+        <hr>
+        <div class="alert alert-danger col-md-5 mt-3" *ngIf="status == 'error' && message != undefined">
+          {{message}}
+        </div>
+        <div class="mb-2">
+          <label for="filter">Filtro</label>
+          <input class="ml-1" type="text" name="filter" [(ngModel)]="filter" (keyup)="onKeyup()" />
+        </div>
+        <table class="table table-striped">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Tipo</th>
+              <th scope="col">Descripción</th>
+              <th scope="col">Cantidad</th>
+              <th scope="col">Usuario</th>
+              <th scope="col">Producto</th>
+              <th scope="col"><a class="btn btn-success" [routerLink]="['/movement/create/']">Crear</a></th>
+            </tr>
+          </thead>
+          <tbody *ngFor="let movement of movements">
+            <tr>
+              <th scope="row">{{movement.id}}</th>
+              <td>{{movement.type}}</td>
+              <td>{{movement.description}}</td>
+              <td>{{movement.quantity}}</td>
+              <td>{{movement.user.name + ' ' + movement.user.surname}}</td>
+              <td>{{movement.product.name}}</td>
+              <td>
+                <a class="btn btn-warning" [routerLink]="['/movement/show/'+movement.id]" data-toggle="tooltip"
+                  data-placement="top" title="Mostrar">
+                  <img src="/assets/images/show-icon.png" width="24" height="24" alt="Mostrar">
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <pagination *ngIf="totalPages > 1" class="justify-content-center" [totalItems]="totalItems" [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" [(ngModel)]="currentPage"
+          (pageChanged)="pageChanged($event)" nextText="Siguiente" previousText="Anterior">
+        </pagination>
+      </div>

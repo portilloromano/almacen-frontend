@@ -1,0 +1,38 @@
+<div class="container mt-3" *ngIf="product">
+    <h1>{{pageTitle}}</h1>
+    <hr>
+    <div class="alert alert-danger col-md-5 mt-3" *ngIf="status=='error'">
+        {{message}}
+    </div>
+    <div class="col-md-5 ml-0 pl-0">
+        <div class="form-group">
+            <label for="name">Nombre</label>
+            <label class="form-control" name="name">{{product.name}}</label>
+        </div>
+        <div class="form-group">
+            <label for="description">Descripción</label>
+            <label class="form-control" name="description">{{product.description}}</label>
+        </div>
+        <div class="form-group">
+            <label for="quantity">Cantidad</label>
+            <label class="form-control" name="quantity">{{product.quantity}}</label>
+        </div>
+        <div class="form-group">
+            <label for="category">Categoría</label>
+            <label class="form-control" name="category">{{product.categoryId['name']}}</label>
+        </div>
+        <div class="form-group">
+            <label for="provider">Proveedor</label>
+            <label class="form-control" name="provider">{{product.providerId['name']}}</label>
+        </div>
+        <div class="form-group">
+            <label for="createdAt">Fecha de creación</label>
+            <label class="form-control" name="createdAt">{{product.createdAt | date: 'dd/MM/yyyy, HH:mm'}}</label>
+        </div>
+        <div class="form-group">
+            <label for="updatedAt">Fecha de la última modificación</label>
+            <label class="form-control" name="updatedAt">{{product.updatedAt | date: 'dd/MM/yyyy, HH:mm'}}</label>
+        </div>
+        <a class="btn btn-success text-light mb-3" [routerLink]="['/product/']">Regresar</a>
+    </div>
+</div>
